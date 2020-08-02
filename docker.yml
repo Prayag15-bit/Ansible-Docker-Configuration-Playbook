@@ -1,0 +1,105 @@
+- hosts: all
+  tasks:
+          # INSTALLATION OF GIT
+          - name: "Installing git" 
+            package:
+                    name: "git"
+                    state: present
+          - debug:
+                  msg: "GIT is ready"
+            
+            #DOWNLOADING THE DOCKER REPO
+          - name: "Creating a cloning directory"        
+            command: mkdir cloning
+          - debug:
+                  msg: "Cloning directory is created"
+          - name: "Cloning the Docker repo"
+            command: git clone https://github.com/Prayag15-bit/docker_repo_file.git /cloning
+          - debug:
+                  msg: "Cloning is done"
+          - name: "Moving the repo to the respective directory"
+            command: mv /cloning/docker.repo /etc/yum.repos.d/ -f
+          - debug:
+                  msg: "REPO is moved successfully"
+          - name: "Removing the previous created directory"
+            command: rm /cloning -rvf
+
+          # UPDATING REPOS
+          - name: "Updating the repos"
+            yum:
+                  name: '*'
+                  state: latest
+
+          # ENABLING THE REPO
+          - name: "Enabling the repo"
+            yum:
+                  enablerepo: docker.repo
+          - name: "Installing the Docker Dependencies" 
+            yum:
+                  name: "{{ item }}"
+                  state: latest
+            with_items:
+                    - device-mapper-persistent-data
+                    - lvm2
+
+          # INSTALLING DOCKER
+          - name: "Installation of Docker"
+            shell:
+                    "yum install docker-ce --nobest -y"
+
+          # ENABLING DOCKER SERVICE
+          - name: "Enabling docker service"
+            service:
+                    name: "docker"
+                    state: started
+          - debug:
+                    msg: "Congratulations, Docker service is running"
+
+          # PULL PHP IMAGE
+          - name: "Pulling the Docker Image"
+            command: docker pull vimal13/apache-webserver-php
+          - debug:
+                  msg: "Image pulled successfully"
+
+          - shell: pip3 install docker-py
+
+          # RUN DOCKER IMAGE, EXPOSING IT AND COPYING THE FILE
+          - name: "Setting the container"
+            docker_container:
+                    name: "php-interpreter"
+                    image: vimal13/apache-webserver-php
+                    state: started 
+                    published_ports:
+                            - "85:80"
+                    volumes:
+                            - "/var/www/html/php_code.php:/var/www/html/"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 
+
