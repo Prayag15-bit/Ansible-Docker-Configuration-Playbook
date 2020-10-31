@@ -38,6 +38,6 @@ inventory = /etc/<text_file_name>.txt
 
 *<IP_of_the_configured_system>:85/php_code.php*
 
-# In case of any difficulty, you can refer the below artice to take reference from :-
+# In case of any difficulty, you can refer the below artice to take reference :-
 
 <https://www.linkedin.com/pulse/using-ansible-integrate-docker-linux-prayag-magotra/>
