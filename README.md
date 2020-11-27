@@ -15,7 +15,7 @@ If you want to install and configure Ansible in your system, follow these steps 
 5. Open the text file using any text editor (vi/vim/gedit) and add this syntax as shown below :-
 <IP_of_the_system_to_be_configured>   ansible_ssh_user=root   ansible_ssh_pass=<root_account_password>
 
-Eg:- *1.2.3.4  ansible_ssh_user=root  ansible_ssh_pass=1234*
+Eg:- *10.30.73.138  ansible_ssh_user=root  ansible_ssh_pass=1234*
 
 6. Now, open the ansible configuration file using the text editor and add the content :-
 
